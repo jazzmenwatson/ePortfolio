@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jazzmen Watson · Instructional Design</title>
+<style>
+  :root{
+    --paper:#F6F4ED;
+    --manila:#EAE3D0;
+    --manila-deep:#E0D7BE;
+    --ink:#1E241C;
+    --ink-soft:#3B453A;
+    --moss:#56654F;
+    --garnet:#7C2D2D;
+    --garnet-deep:#5C1F1F;
+    --rule:#D2C9B2;
+    --rule-soft:#E2DBC8;
+    --serif:'Iowan Old Style','Palatino Linotype','Book Antiqua',Palatino,Georgia,'Times New Roman',serif;
+    --mono:ui-monospace,'SF Mono','Cascadia Code','DejaVu Sans Mono',Menlo,Consolas,monospace;
+    --maxw:1080px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--serif);
+    font-size:18px;
+    line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  /* faint alignment grid */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:0;
+    background-image:linear-gradient(to right, rgba(30,36,28,0.035) 1px, transparent 1px);
+    background-size:calc((100% ) / 12) 100%;
+    opacity:.5;
+    -webkit-mask-image:linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+            mask-image:linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+  }
+  .wrap{position:relative;z-index:1;max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  a{color:inherit;}
+  .mono{font-family:var(--mono);}
+
+  /* ---------- masthead bar ---------- */
+  .topbar{
+    border-bottom:1px solid var(--ink);
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+  }
+  .topbar .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-top:13px;padding-bottom:13px;flex-wrap:wrap;}
+  .topbar .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--garnet);vertical-align:middle;margin-right:7px;}
+
+  /* ---------- hero / title block ---------- */
+  .hero{padding:74px 0 56px;}
+  .hero .eyebrow{
+    font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--moss);margin:0 0 26px;
+  }
+  .hero h1{
+    font-weight:400;
+    font-size:clamp(46px,9vw,104px);
+    line-height:.96;
+    letter-spacing:-.015em;
+    margin:0;
+  }
+  .hero h1 .amp{color:var(--garnet);font-style:italic;}
+  .role{
+    font-family:var(--mono);font-size:13px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ink-soft);margin:22px 0 0;
+  }
+  .creds{font-size:11px;letter-spacing:.04em;color:var(--moss);margin:9px 0 0;}
+  .thesis{
+    font-size:clamp(22px,3.1vw,31px);
+    line-height:1.36;
+    max-width:21ch;
+    margin:40px 0 0;
+  }
+  .thesis em{font-style:italic;color:var(--garnet);}
+  .legend{
+    margin-top:52px;border-top:1px solid var(--rule);padding-top:18px;
+    display:flex;flex-wrap:wrap;gap:8px 10px;
+  }
+  .legend .lab{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--moss);text-transform:uppercase;width:100%;margin-bottom:4px;}
+  .tagchip{
+    font-family:var(--mono);font-size:11px;letter-spacing:.08em;
+    border:1px solid var(--rule);border-radius:2px;padding:4px 9px;color:var(--ink-soft);
+    text-transform:uppercase;text-decoration:none;transition:all .18s ease;background:transparent;
+  }
+  .tagchip:hover{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+
+  /* ---------- section header ---------- */
+  .sec{padding:66px 0;border-top:1px solid var(--ink);}
+  .sechead{display:flex;align-items:baseline;gap:18px;margin-bottom:8px;}
+  .sechead .num{font-family:var(--mono);font-size:12px;letter-spacing:.12em;color:var(--garnet);}
+  .sechead h2{font-weight:400;font-size:clamp(26px,4vw,40px);letter-spacing:-.01em;margin:0;line-height:1.05;}
+  .seclede{color:var(--moss);max-width:60ch;margin:0 0 40px;font-size:17px;}
+
+  /* ---------- specimen catalogue ---------- */
+  .spec{
+    display:grid;grid-template-columns:128px 1fr 300px;gap:30px;
+    padding:34px 0;border-top:1px solid var(--rule);
+    align-items:start;
+  }
+  .spec:first-of-type{border-top:1px solid var(--rule);}
+  .spec .tag{font-family:var(--mono);}
+  .spec .tag .code{
+    display:inline-block;font-size:13px;letter-spacing:.1em;color:var(--paper);
+    background:var(--ink);padding:3px 9px;border-radius:2px;
+  }
+  .spec .tag .kind{display:block;margin-top:11px;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--moss);line-height:1.7;}
+  .spec h3{font-weight:400;font-size:25px;margin:0 0 8px;line-height:1.12;letter-spacing:-.01em;}
+  .spec p{margin:0;color:var(--ink-soft);font-size:16.5px;line-height:1.6;}
+  .spec p + p{margin-top:11px;}
+
+  /* the inline exhibit */
+  .exhibit{
+    background:var(--manila);
+    border:1px solid var(--rule);
+    border-radius:3px;
+    padding:16px 16px 15px;
+    font-family:var(--mono);
+    font-size:11.5px;
+    color:var(--ink-soft);
+  }
+  .exhibit .ex-cap{
+    font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--moss);
+    border-bottom:1px solid var(--manila-deep);padding-bottom:8px;margin-bottom:11px;
+    display:flex;justify-content:space-between;
+  }
+  /* alignment chain exhibit */
+  .chain{display:flex;flex-direction:column;gap:0;}
+  .chain .node{padding:8px 10px;background:var(--paper);border:1px solid var(--rule);border-radius:2px;position:relative;}
+  .chain .node b{color:var(--garnet);font-weight:400;}
+  .chain .arrow{height:16px;width:1px;background:var(--moss);margin:3px auto;position:relative;}
+  .chain .arrow::after{content:"";position:absolute;bottom:0;left:-3px;border-left:3.5px solid transparent;border-right:3.5px solid transparent;border-top:5px solid var(--moss);}
+  /* mini table exhibit */
+  .minitab{width:100%;border-collapse:collapse;font-size:11px;}
+  .minitab th{text-align:left;font-weight:400;color:var(--moss);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;padding:0 6px 6px 0;border-bottom:1px solid var(--manila-deep);}
+  .minitab td{padding:6px 6px 6px 0;border-bottom:1px solid var(--rule-soft);vertical-align:top;}
+  .minitab tr:last-child td{border-bottom:none;}
+  .minitab .obj{color:var(--garnet);}
+  /* severity scale exhibit */
+  .scale{list-style:none;margin:0;padding:0;}
+  .scale li{display:flex;align-items:center;gap:9px;padding:5px 0;}
+  .scale .sw{width:11px;height:11px;border-radius:2px;flex:none;}
+  .scale .lv{color:var(--ink-soft);}
+  .scale .ct{margin-left:auto;color:var(--moss);}
+  /* two-lane workflow exhibit */
+  .lanes{display:flex;flex-direction:column;gap:7px;}
+  .lanes .lane{display:flex;align-items:center;gap:8px;}
+  .lanes .who{width:46px;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--moss);flex:none;text-align:right;}
+  .lanes .step{flex:1;padding:6px 9px;border-radius:2px;font-size:10.5px;}
+  .lanes .ai{background:var(--paper);border:1px solid var(--rule);}
+  .lanes .hu{background:var(--ink);color:var(--paper);}
+  .lanes .gate{background:transparent;border:1px dashed var(--garnet);color:var(--garnet);}
+  /* steps exhibit */
+  .steps{list-style:none;margin:0;padding:0;counter-reset:s;}
+  .steps li{padding:6px 0 6px 26px;position:relative;border-bottom:1px solid var(--rule-soft);}
+  .steps li:last-child{border-bottom:none;}
+  .steps li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:6px;font-size:9.5px;color:var(--garnet);border:1px solid var(--rule);border-radius:50%;width:16px;height:16px;line-height:14px;text-align:center;}
+  /* folder/template exhibit */
+  .tplrows{list-style:none;margin:0;padding:0;}
+  .tplrows li{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--rule-soft);}
+  .tplrows li:last-child{border-bottom:none;}
+  .tplrows .v{color:var(--moss);}
+
+  /* ---------- approach / method ---------- */
+  .method{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:3px;overflow:hidden;}
+  .tenet{background:var(--paper);padding:26px 26px 28px;}
+  .tenet .t-lab{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--garnet);margin-bottom:13px;}
+  .tenet h4{font-weight:400;font-size:21px;margin:0 0 9px;line-height:1.2;}
+  .tenet p{margin:0;color:var(--ink-soft);font-size:15.5px;line-height:1.55;}
+
+  /* ---------- artifacts ---------- */
+  .arts{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .art.feature{grid-column:1 / -1;background:var(--manila);border-color:var(--manila-deep);}
+  .art.feature h4{font-size:25px;}
+  .art.feature .a-why{margin-top:10px;font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--garnet);}
+  .art{
+    border:1px solid var(--rule);border-radius:3px;background:var(--paper);
+    padding:24px 24px 22px;display:flex;flex-direction:column;min-height:178px;
+    transition:border-color .18s ease, transform .18s ease;
+    text-decoration:none;color:inherit;
+  }
+  .art:hover .a-fmt{color:var(--garnet);}
+  .art:hover{border-color:var(--ink);transform:translateY(-2px);}
+  .art .a-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+  .art .a-code{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--paper);background:var(--garnet);padding:3px 8px;border-radius:2px;}
+  .art .a-fmt{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--moss);}
+  .art h4{font-weight:400;font-size:22px;margin:0 0 8px;line-height:1.18;}
+  .art p{margin:0;color:var(--ink-soft);font-size:15px;line-height:1.5;}
+  .art .a-foot{margin-top:auto;padding-top:16px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--moss);}
+
+  /* ---------- engagements ---------- */
+  .eng{list-style:none;margin:0;padding:0;}
+  .eng li{display:grid;grid-template-columns:140px 1fr 150px;gap:20px;padding:17px 0;border-top:1px solid var(--rule);align-items:baseline;}
+  .eng li:last-child{border-bottom:1px solid var(--rule);}
+  .eng .e-when{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;color:var(--moss);}
+  .eng .e-what{font-size:18px;}
+  .eng .e-what span{display:block;color:var(--moss);font-size:14px;margin-top:3px;}
+  .eng .e-role{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);text-align:right;}
+
+  /* ---------- footer ---------- */
+  footer{background:var(--ink);color:var(--paper);margin-top:0;}
+  footer .wrap{padding:64px 28px 40px;}
+  footer .f-thesis{font-size:clamp(24px,4vw,38px);line-height:1.28;max-width:20ch;margin:0 0 40px;font-weight:400;}
+  footer .f-thesis em{font-style:italic;color:#D69B9B;}
+  footer .f-row{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;border-top:1px solid rgba(246,244,237,.22);padding-top:22px;}
+  footer .f-row .grp{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;line-height:2;}
+  footer .f-row .grp b{display:block;color:#A9B3A4;font-weight:400;font-size:10px;margin-bottom:5px;letter-spacing:.16em;}
+  footer a{color:var(--paper);text-decoration:none;border-bottom:1px solid rgba(246,244,237,.4);}
+  footer a:hover{border-bottom-color:var(--paper);}
+
+  /* reveal */
+  .rv{opacity:0;transform:translateY(14px);transition:opacity .7s ease, transform .7s ease;}
+  .rv.in{opacity:1;transform:none;}
+
+  @media (max-width:860px){
+    .spec{grid-template-columns:1fr;gap:18px;}
+    .spec .tag{display:flex;align-items:center;gap:14px;}
+    .spec .tag .kind{margin-top:0;}
+    .exhibit{max-width:420px;}
+    .method,.arts{grid-template-columns:1fr;}
+    .eng li{grid-template-columns:1fr;gap:5px;}
+    .eng .e-role{text-align:left;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .rv{opacity:1;transform:none;transition:none;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div><span class="dot"></span>Instructional Design / Learning Systems</div>
+    <div>Online · Hybrid · On-ground · Baltimore, MD</div>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Portfolio · Selected practice</p>
+    <h1>Jazzmen<br>Wats<span class="amp">o</span>n</h1>
+    <p class="role">Instructional Design · Curriculum Development · Educational Technology</p>
+    <p class="creds mono">MA, Contemporary Communication · Grad Certificate, Instructional Systems Design · Quality Matters</p>
+    <p class="thesis">I build the <em>structures</em> that help people take in complicated material and act on it with confidence.</p>
+
+    <div class="legend">
+      <span class="lab">What this catalogue covers</span>
+      <a class="tagchip" href="#FAC">FAC · Faculty consulting</a>
+      <a class="tagchip" href="#TPL">TPL · Templates</a>
+      <a class="tagchip" href="#GDE">GDE · Guides</a>
+      <a class="tagchip" href="#WFL">WFL · Workflows</a>
+      <a class="tagchip" href="#QAC">QAC · Quality assurance</a>
+      <a class="tagchip" href="#PBK">PBK · Playbooks</a>
+      <a class="tagchip" href="#CRS">CRS · Course design</a>
+    </div>
+  </div>
+</header>
+
+<!-- ================= CATALOGUE ================= -->
+<section class="sec" id="catalogue">
+  <div class="wrap">
+    <div class="sechead rv">
+      <span class="num">01</span>
+      <h2>The work, catalogued</h2>
+    </div>
+    <p class="seclede rv">A sampling of the kinds of artifacts I produce. Each entry pairs the discipline with a small specimen drawn from real engagements, abstracted so it can travel. Names and clients are withheld by default.</p>
+
+    <!-- FAC -->
+    <div class="spec rv" id="FAC">
+      <div class="tag"><span class="code">FAC</span><span class="kind">Faculty<br>Consulting</span></div>
+      <div>
+        <h3>Sitting beside the subject-matter expert</h3>
+        <p>Most faculty know their content cold and have never been asked to teach it online. I translate expertise into a teachable shape: surfacing what learners actually struggle with, sequencing it, and protecting the instructor's voice while the structure does the heavy lifting.</p>
+        <p>The output is rarely a document. It is a shared decision the expert can defend: what to cut, what to assess, where to spend their limited time. From there I provide the training and support that helps faculty run what we built, through launch and beyond.</p>
+      </div>
+      <div class="exhibit">
+        <div class="ex-cap"><span>Consult notes</span><span>excerpt</span></div>
+        <ul class="steps">
+          <li>Name the one thing learners must be able to do</li>
+          <li>Find where understanding usually breaks</li>
+          <li>Cut content that does not serve the outcome</li>
+          <li>Decide the evidence of success up front</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- TPL -->
+    <div class="spec rv" id="TPL">
+      <div class="tag"><span class="code">TPL</span><span class="kind">Templates</span></div>
+      <div>
+        <h3>Reusable structure, not one-off pages</h3>
+        <p>A good template encodes a decision once so it does not have to be re-litigated on every module. I build module blueprints, page patterns, and tagged inventories that keep a team of designers consistent across dozens of units without flattening the material.</p>
+        <p>Each template carries its own instructions, so the next person inherits the reasoning, not just the layout.</p>
+      </div>
+      <div class="exhibit">
+        <div class="ex-cap"><span>Module blueprint</span><span>1 of 35</span></div>
+        <ul class="tplrows">
+          <li><span>Module objective</span><span class="v">1 measurable</span></li>
+          <li><span>Lesson pattern</span><span class="v">read · model · try</span></li>
+          <li><span>Assessment</span><span class="v">aligned, low-stakes</span></li>
+          <li><span>Asset list</span><span class="v">tagged, tracked</span></li>
+          <li><span>Accessibility</span><span class="v">checked at build</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- GDE -->
+    <div class="spec rv" id="GDE">
+      <div class="tag"><span class="code">GDE</span><span class="kind">Guides</span></div>
+      <div>
+        <h3>Writing so the reader can act</h3>
+        <p>Facilitator guides, learner orientations, and reference material that respect attention. I write to the moment of use: what the reader is trying to do, what could go wrong, and the single next step. Plain verbs, no filler, examples that demonstrate rather than decorate.</p>
+        <p>The test for any guide is simple. Can someone follow it without me in the room.</p>
+      </div>
+      <div class="exhibit">
+        <div class="ex-cap"><span>Facilitator guide</span><span>week view</span></div>
+        <table class="minitab">
+          <tr><th>When</th><th>Move</th></tr>
+          <tr><td>Open</td><td>Post the week's one question</td></tr>
+          <tr><td>Mid</td><td>Reply to two threads, name a pattern</td></tr>
+          <tr><td>Close</td><td>Summarize, preview the next build</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- WFL -->
+    <div class="spec rv" id="WFL">
+      <div class="tag"><span class="code">WFL</span><span class="kind">Workflows</span></div>
+      <div>
+        <h3>AI as a labor-multiplier, never the author</h3>
+        <p>I design production workflows where automation does the repetitive lifting and a human holds authority over anything that reaches a learner. Every step is auditable: what the model drafted, what a reviewer changed, and why. Speed without losing the paper trail.</p>
+        <p>The discipline is in the gates, not the generation. The model proposes; a person decides.</p>
+      </div>
+      <div class="exhibit">
+        <div class="ex-cap"><span>Blueprint to build</span><span>human-in-the-loop</span></div>
+        <div class="lanes">
+          <div class="lane"><span class="who">AI</span><span class="step ai">Draft page from blueprint</span></div>
+          <div class="lane"><span class="who">Human</span><span class="step gate">Review gate: voice + accuracy</span></div>
+          <div class="lane"><span class="who">AI</span><span class="step ai">Format, tag, stage</span></div>
+          <div class="lane"><span class="who">Human</span><span class="step hu">Sign off, publish</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QAC -->
+    <div class="spec rv" id="QAC">
+      <div class="tag"><span class="code">QAC</span><span class="kind">Quality<br>Assurance</span></div>
+      <div>
+        <h3>The two-pane review</h3>
+        <p>My signature check runs in two panes at once: inline comments on the artifact itself, and a structured log that scores every issue by severity and tracks it to resolution. Nothing gets waved through, and nothing gets lost between rounds.</p>
+        <p>It also produces evidence. When scope or quality is disputed, the log is the record.</p>
+      </div>
+      <div class="exhibit">
+        <div class="ex-cap"><span>Severity scale</span><span>QA log</span></div>
+        <ul class="scale">
+          <li><span class="sw" style="background:var(--garnet)"></span><span class="lv">S1 · Blocks the learner</span><span class="ct">fix now</span></li>
+          <li><span class="sw" style="background:#C98A3A"></span><span class="lv">S2 · Impairs learning</span><span class="ct">this round</span></li>
+          <li><span class="sw" style="background:#7E8C5C"></span><span class="lv">S3 · Polish</span><span class="ct">log it</span></li>
+          <li><span class="sw" style="background:#9AA39A"></span><span class="lv">S4 · Note for next time</span><span class="ct">backlog</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- PBK -->
+    <div class="spec rv" id="PBK">
+      <div class="tag"><span class="code">PBK</span><span class="kind">Playbooks</span></div>
+      <div>
+        <h3>Turning a fire drill into a procedure</h3>
+        <p>When a tool gets deprecated across ninety labs, or a new platform has to be onboarded mid-program, the difference between chaos and a clean migration is a playbook. I document the decision tree, the client-facing message, and the staffing so the same crisis never costs full price twice.</p>
+        <p>A playbook is institutional memory that does not depend on any one person staying.</p>
+      </div>
+      <div class="exhibit">
+        <div class="ex-cap"><span>Migration playbook</span><span>tooling change</span></div>
+        <ul class="steps">
+          <li>Audit every affected asset, tag by effort</li>
+          <li>Choose replacements, map old to new</li>
+          <li>Decide what the client needs to see</li>
+          <li>Stage, verify, roll forward by cohort</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- CRS -->
+    <div class="spec rv" id="CRS">
+      <div class="tag"><span class="code">CRS</span><span class="kind">Course<br>Design</span></div>
+      <div>
+        <h3>Alignment all the way down</h3>
+        <p>Every choice in a course should trace back to what the learner needs to be able to do. I hold that chain end to end: objective to assessment to activity to asset, with the ADDIE backbone keeping the build honest and the Community of Inquiry keeping it human.</p>
+        <p>I design across online, hybrid, and on-ground delivery, for adult and working learners and for certification-aligned outcomes. When the alignment is right, the course feels effortless to the learner. That ease is the design.</p>
+      </div>
+      <div class="exhibit">
+        <div class="ex-cap"><span>Alignment chain</span><span>one objective</span></div>
+        <div class="chain">
+          <div class="node"><b>Objective.</b> Validate a data model</div>
+          <div class="arrow"></div>
+          <div class="node"><b>Assessment.</b> Audit a flawed schema</div>
+          <div class="arrow"></div>
+          <div class="node"><b>Activity.</b> Guided lab, then solo</div>
+          <div class="arrow"></div>
+          <div class="node"><b>Asset.</b> Sandbox + rubric</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= METHOD ================= -->
+<section class="sec" id="method">
+  <div class="wrap">
+    <div class="sechead rv">
+      <span class="num">02</span>
+      <h2>How I work</h2>
+    </div>
+    <p class="seclede rv">A few commitments that hold across every engagement, regardless of subject or client.</p>
+
+    <div class="method rv">
+      <div class="tenet">
+        <div class="t-lab">Structure first</div>
+        <h4>ADDIE as a backbone, not a cage</h4>
+        <p>Analysis and design earn their keep before anyone builds a page. The framework keeps the work honest; it never replaces judgment about the learner in front of you.</p>
+      </div>
+      <div class="tenet">
+        <div class="t-lab">Authority stays human</div>
+        <h4>AI multiplies labor, people own the outcome</h4>
+        <p>I build auditable, human-in-the-loop workflows. The role of the model and the role of the person are written down, so the line of accountability is never blurry.</p>
+      </div>
+      <div class="tenet">
+        <div class="t-lab">Evidence over assertion</div>
+        <h4>Every claim of quality has a record</h4>
+        <p>The two-pane review, tagged inventories, and deliverable trackers mean quality is something you can point to, not something you have to take on faith.</p>
+      </div>
+      <div class="tenet">
+        <div class="t-lab">Project discipline</div>
+        <h4>I run development like a project, not a hope</h4>
+        <p>Timelines, deliverables, and stakeholder communication are managed, not assumed. Scope and risk get raised before they become problems. Pre-emptive and clinical beats reactive every time.</p>
+      </div>
+      <div class="tenet">
+        <div class="t-lab">Who it serves</div>
+        <h4>Built for adult and working learners</h4>
+        <p>Adult learning theory is not a citation; it is the design constraint. The people in these courses are busy, motivated, and often non-traditional. The path has to be clear enough to follow at 10pm after a shift.</p>
+      </div>
+      <div class="tenet">
+        <div class="t-lab">Never finished</div>
+        <h4>Improvement is continuous and evidenced</h4>
+        <p>Course feedback, learner performance, and quality metrics drive the next revision. A course at launch is a hypothesis; the data tells you where it was right and where it needs another pass.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ARTIFACTS ================= -->
+<section class="sec" id="artifacts">
+  <div class="wrap">
+    <div class="sechead rv">
+      <span class="num">03</span>
+      <h2>Sample artifacts</h2>
+    </div>
+    <p class="seclede rv">Five representative deliverables, abstracted from real work and built to the same standard I ship to clients. Each is available as a PDF alongside this portfolio.</p>
+
+    <div class="arts">
+      <a class="art feature rv" href="./Assessment-Design-for-AI-Enabled-Classrooms.pdf" target="_blank" rel="noopener">
+        <div class="a-top"><span class="a-code">AI · ASM</span><span class="a-fmt">PDF · featured ↓</span></div>
+        <h4>Assessment Design for AI-Enabled Classrooms</h4>
+        <p>A framework for assessment when every student has generative AI: the three postures toward AI use, design moves that keep assessment authentic, and a worked redesign of one assessment to measure thinking rather than output. Integrity by design, not by surveillance.</p>
+        <div class="a-why">Built for institutions integrating AI while protecting academic integrity and authentic skill development.</div>
+      </a>
+      <a class="art rv" href="./Course-Design-Blueprint.pdf" target="_blank" rel="noopener">
+        <div class="a-top"><span class="a-code">CRS · TPL</span><span class="a-fmt">PDF ↓</span></div>
+        <h4>Course Design Blueprint</h4>
+        <p>A module-level blueprint template: objectives, the alignment chain, assessment plan, and a tagged asset list, with a worked sample module.</p>
+        <div class="a-foot">Template + worked example</div>
+      </a>
+      <a class="art rv" href="./Faculty-Facilitation-Guide.pdf" target="_blank" rel="noopener">
+        <div class="a-top"><span class="a-code">FAC · GDE · PBK</span><span class="a-fmt">PDF ↓</span></div>
+        <h4>Faculty Facilitation Guide</h4>
+        <p>A practical guide for instructors running an online cohort: the weekly rhythm, high-leverage engagement moves, and the common pitfalls to avoid.</p>
+        <div class="a-foot">Guide + onboarding</div>
+      </a>
+      <a class="art rv" href="./Two-Pane-QA-Protocol.pdf" target="_blank" rel="noopener">
+        <div class="a-top"><span class="a-code">QAC</span><span class="a-fmt">PDF ↓</span></div>
+        <h4>Two-Pane QA Review Protocol</h4>
+        <p>The full method documented: severity definitions, the review sequence, sign-off criteria, and a sample QA log ready to adapt.</p>
+        <div class="a-foot">Protocol + log template</div>
+      </a>
+      <a class="art rv" href="./AI-Assisted-Production-Workflow.pdf" target="_blank" rel="noopener">
+        <div class="a-top"><span class="a-code">WFL</span><span class="a-fmt">PDF ↓</span></div>
+        <h4>AI-Assisted Production Workflow</h4>
+        <p>A human-in-the-loop workflow for turning a blueprint into built pages, with each review gate and the division of authority between model and reviewer.</p>
+        <div class="a-foot">Workflow + control points</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ENGAGEMENTS ================= -->
+<section class="sec" id="engagements">
+  <div class="wrap">
+    <div class="sechead rv">
+      <span class="num">04</span>
+      <h2>Selected contexts</h2>
+    </div>
+    <p class="seclede rv">Where this practice has been built, across fifteen years in higher education and learning design. Client and program names are withheld; roles and institutions are not.</p>
+
+    <ul class="eng">
+      <li class="rv">
+        <span class="e-when">2023 — now</span>
+        <span class="e-what">LearningMate · Senior Manager, Learning Design<span>Certification-aligned programs at production scale, AI-assisted course development, and faculty certification pathway design</span></span>
+        <span class="e-role">Design lead</span>
+      </li>
+      <li class="rv">
+        <span class="e-when">2019 — 2023</span>
+        <span class="e-what">2U / edX · Senior Learning Designer, then Manager of Course Iteration<span>University-scale online course design and data-driven continuous improvement</span></span>
+        <span class="e-role">IC to manager</span>
+      </li>
+      <li class="rv">
+        <span class="e-when">2015 — 2019</span>
+        <span class="e-what">Johns Hopkins University · Instructional Technologist, School of Nursing<span>Digital learning for health-professions adult learners, online and hybrid</span></span>
+        <span class="e-role">Technologist</span>
+      </li>
+      <li class="rv">
+        <span class="e-when">Prior</span>
+        <span class="e-what">Towson University · Lecturer, Mass Communication and New Media<span>On-ground and hybrid teaching of adult undergraduates</span></span>
+        <span class="e-role">Faculty</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <p class="f-thesis">Complicated material, made <em>teachable</em>. That is the whole job.</p>
+    <div class="f-row">
+      <div class="grp"><b>Practice</b>Instructional design<br>Curriculum development<br>Educational technology</div>
+      <div class="grp"><b>Methods</b>ADDIE · Community of Inquiry<br>Quality Matters · accessibility<br>Two-pane QA · human-in-the-loop AI</div>
+      <div class="grp"><b>Toolset</b>Canvas · Articulate Rise 360<br>H5P · authoring tools<br>Gemini · Claude · NotebookLM</div>
+      <div class="grp"><b>Credentials</b>MA, Contemporary Communication<br>Grad cert, Instructional Systems Design<br>Quality Matters</div>
+      <div class="grp"><b>Contact</b><a href="#">Email</a><br><a href="#">LinkedIn</a><br>Baltimore, MD</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var els = document.querySelectorAll('.rv');
+    if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in');});return;}
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target);} });
+    },{threshold:.12, rootMargin:'0px 0px -8% 0px'});
+    els.forEach(function(e){io.observe(e);});
+  })();
+</script>
+
+</body>
+</html>
